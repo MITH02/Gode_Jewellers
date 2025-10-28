@@ -13,7 +13,7 @@ import java.util.List;
 public class CorsConfig {
 
 	// ✅ Get allowed origins dynamically (set via environment variable in Render)
-	@Value("${cors.allowed.origins:http://localhost:3000}")
+	@Value("${cors.allowed.origins:http://localhost:5173}")
 	private String allowedOrigins;
 
 	@Bean
