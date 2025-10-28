@@ -21,8 +21,8 @@ public class CorsConfig {
 		CorsConfiguration config = new CorsConfiguration();
 
 		// ✅ Split allowed origins from env var
-		// config.setAllowedOrigins(List.of(allowedOrigins.split(",")));
-		config.setAllowedOrigins(List.of("https://gode-jewellers-frontend.onrender.com"));
+		config.setAllowedOrigins(List.of(allowedOrigins.split(",")));
+		// config.setAllowedOrigins(List.of("https://gode-jewellers-frontend.onrender.com"));
 
 
 		config.setAllowCredentials(true);
