@@ -7,7 +7,7 @@ FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy Maven configuration and source code
-COPY pom.xml .
+COPY pom.xml ./
 COPY src ./src
 
 # Package the application (skip tests for faster build)
@@ -18,14 +18,16 @@ RUN mvn clean package -DskipTests
 # ===============================
 FROM eclipse-temurin:17-jdk
 
-# Set working directory inside container
 WORKDIR /app
 
-# Copy built JAR from previous stage
+# Copy built JAR from the previous stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the default Spring Boot port (Render auto-maps PORT)
-EXPOSE 8099
+# ✅ Render dynamically assigns PORT
+ENV PORT=8099
 
-# Use environment PORT if provided, fallback to 8099
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# ✅ Tell Docker which port the app will use
+EXPOSE ${PORT}
+
+# ✅ Pass the Render-assigned PORT to Spring Boot at runtime
+ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=${PORT}"]
